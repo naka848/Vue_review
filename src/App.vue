@@ -1,15 +1,52 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="wrapper">
+    <h2 class="text-success">Twitter-Vue3</h2>
+    <div class="content">
+      <Form v-on:tweet-event="tweetAction" />
+      <div style="margin-top:20px">
+        <Tweet
+          v-for="Tweet in AllTweet"
+          v-bind:TweetObj="Tweet"
+          v-bind:key="Tweet.tweet_id"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Form from "./components/Form.vue";
+import Tweet from "./components/Tweet.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    Form,
+    Tweet,
+  },
+  data() {
+    return {
+      AllTweet: Array.of({
+        tweet_id: 0,
+        tweet_body: "はじめてのツイート",
+      }),
+    };
+  },
+  methods: {
+    tweetAction(TweetObj) {
+      this.AllTweet.push(TweetObj);
+    },
   },
 };
 </script>
+
+<style>
+.wrapper {
+  width: 60%;
+  margin: 20px auto;
+}
+.content {
+  margin: 20px auto;
+  width: 100%;
+}
+</style>
